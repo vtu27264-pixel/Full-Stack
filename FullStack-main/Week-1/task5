@@ -1,0 +1,26 @@
+mysql> START TRANSACTION;
+Query OK, 0 rows affected (0.01 sec)
+mysql> INSERT INTO Student
+ -> VALUES ('1RV21CS006', 'Vikram', 'vikram@gmail.com', '9876543215', 'CSE');
+Query OK, 1 row affected (0.00 sec)
+mysql> COMMIT;
+Query OK, 0 rows affected (0.01 sec)
+mysql> START TRANSACTION;
+Query OK, 0 rows affected (0.00 sec)
+mysql> UPDATE Student
+ -> SET Department = 'EEE'
+ -> WHERE VTU_Number = '1RV21CS003'
+ -> ;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1 Changed: 1 Warnings: 0
+mysql> SAVEPOINT sp1;
+Query OK, 0 rows affected (0.00 sec)
+mysql> DELETE FROM Student
+ -> WHERE VTU_Number = '1RV21CS004';
+ERROR 1451 (23000): Cannot delete or update a parent row: a foreign key constraint fails 
+(`collegedb`.`course`, CONSTRAINT `course_ibfk_1` FOREIGN KEY (`Student_ID`) REFERENCES 
+`student` (`VTU_Number`))
+mysql> ROLLBACK TO sp1;
+Query OK, 0 rows affected (0.00 sec)
+mysql> COMMIT;
+Query OK, 0 rows affected (0.02 sec)
